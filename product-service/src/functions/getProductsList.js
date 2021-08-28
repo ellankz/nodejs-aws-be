@@ -1,8 +1,6 @@
-'use strict';
+import productsList from '../mockData/productList.json';
 
-const productsList = require('../mockData/productList.json');
-
-module.exports = async () => {
+export default async () => {
   return {
     statusCode: 200,
     headers: {

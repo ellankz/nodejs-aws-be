@@ -1,6 +1,6 @@
-const productsList = require('../mockData/productList.json');
+import productsList from '../mockData/productList.json';
 
-module.exports = async (event) => {
+export default async (event) => {
   const productId = event.pathParameters.productId;
   return {
     statusCode: 200,

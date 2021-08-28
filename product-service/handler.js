@@ -1,8 +1,6 @@
-'use strict';
-const getProductsList = require('./functions/getProductsList');
-const getProductsById = require('./functions/getProductsById');
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import getProductsList from './src/functions/getProductsList';
+import getProductsById from './src/functions/getProductsById';
 
-module.exports = {
-  getProductsList,
-  getProductsById,
-};
+export { getProductsById, getProductsList };

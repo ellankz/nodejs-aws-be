@@ -64,12 +64,49 @@ functions:
       - http:
           path: /products
           method: get
+          documentation:
+            summary: 'Get all products'
+            description: 'Returns the list of all products'
+            requestModels:
+              application/json: 'GetProductsListRequest'
+            methodResponses:
+              - statusCode: 200
+                responseBody:
+                  description: 'List of all products'
+                responseModels:
+                  application/json: 'GetProductsListResponse'
+              - statusCode: 500
+                responseBody:
+                  description: 'Error getting list of products'
+                responseModels:
+                  application/json: 'ErrorResponse'
   getProductsById:
     handler: handler.getProductsById
     events:
       - http:
           path: /products/{productId}
           method: get
+          documentation:
+            summary: 'Get product by id'
+            description: 'Returns product info'
+            requestModels:
+              application/json: 'GetProductRequest'
+            pathParams:
+              - name: 'productId'
+                description: 'Id of the product'
+                schema:
+                  type: string
+            methodResponses:
+              - statusCode: 200
+                responseBody:
+                  description: 'Product info'
+                responseModels:
+                  application/json: 'GetProductResponse'
+              - statusCode: 500
+                responseBody:
+                  description: 'Error getting list of products'
+                responseModels:
+                  application/json: 'ErrorResponse'
 #      - httpApi:
 #          path: /users/create
 #          method: get
@@ -119,9 +156,38 @@ functions:
 #       Value: "Some output value"
 plugins:
   - serverless-webpack
+  - serverless-openapi-documentation
 custom:
   webpack:
     webpackConfig: 'webpack.config.js' # Name of webpack configuration file
     includeModules: false # Node modules configuration for packaging
     packager: 'npm' # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
+  documentation:
+    version: '1'
+    title: 'Products API'
+    description: 'Products API'
+    models:
+      - name: 'ErrorResponse'
+        description: 'This is an error'
+        contentType: 'application/json'
+        schema: ${file(models/ErrorResponse.json)}
+      - name: 'GetProductsListResponse'
+        description: 'GET Document response model'
+        contentType: 'application/json'
+        schema: ${file(models/GetProductsListResponse.json)}
+      - name: 'GetProductsListRequest'
+        description: 'GET Document request mode'
+        contentType: 'application/json'
+        schema: ${file(models/GetProductsListRequest.json)}
+      - name: 'GetProductResponse'
+        description: 'GET Document response model'
+        contentType: 'application/json'
+        schema: ${file(models/GetProductResponse.json)}
+      - name: 'GetProductRequest'
+        description: 'GET Document request mode'
+        contentType: 'application/json'
+        schema: ${file(models/GetProductRequest.json)}
+
+package:
+  individually: true

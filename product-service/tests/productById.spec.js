@@ -1,6 +1,6 @@
 const { getProductsById } = require('../handler');
 
-test('list of products is received', async () => {
+test('product info is received', async () => {
   const event = {
     pathParameters: { productId: '7567ec4b-b10c-48c5-9345-fc73c48a80a1' },
   };
@@ -13,4 +13,21 @@ test('list of products is received', async () => {
   expect(product).toHaveProperty('id');
   expect(product).toHaveProperty('price');
   expect(product).toHaveProperty('title');
+
+  const errorEvent = {
+    pathParameters: { productId: '1111xxxxx' },
+  };
+});
+
+test('not found error is received', async () => {
+  const event = {
+    pathParameters: { productId: '1111xxxxx' },
+  };
+
+  const result = await getProductsById(event);
+  const product = JSON.parse(result.body);
+
+  expect(result).toBeDefined();
+  expect(product).toHaveProperty('code');
+  expect(product).toHaveProperty('status');
 });

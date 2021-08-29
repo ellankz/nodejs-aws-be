@@ -8,10 +8,10 @@ export default async () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
-      body: {
+      body: JSON.stringify({
         code: 404,
         status: 'Not found',
-      },
+      }),
     };
   }
   const productsJSON = await JSON.stringify(productsList);

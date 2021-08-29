@@ -11,10 +11,10 @@ export default async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
-      body: {
+      body: JSON.stringify({
         code: 404,
         status: 'Not found',
-      },
+      }),
     };
   }
 

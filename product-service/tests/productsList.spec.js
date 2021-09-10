@@ -1,7 +1,7 @@
 const { getProductsList } = require('../handler');
 
 test('list of products is received', async () => {
-  const result = await getProductsList();
+  const result = await getProductsList({});
   const productList = JSON.parse(result.body);
   expect(result).toBeDefined();
   expect(Array.isArray(productList)).toBe(true);

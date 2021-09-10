@@ -1,8 +1,11 @@
 import { handleError } from './handleError';
 import { Client } from 'pg';
 import { dbOptions } from '../../config';
+import { logRequest } from './logRequest';
 
-export default async () => {
+export default async (event) => {
+  logRequest(event);
+
   const client = new Client(dbOptions);
   await client.connect();
 

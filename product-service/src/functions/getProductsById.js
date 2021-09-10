@@ -1,8 +1,11 @@
 import { Client } from 'pg';
 import { dbOptions } from '../../config';
 import { handleError } from './handleError';
+import { logRequest } from './logRequest';
 
 export default async (event) => {
+  logRequest(event);
+
   const client = new Client(dbOptions);
   await client.connect();
   const productId = event.pathParameters.productId;

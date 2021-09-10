@@ -25,7 +25,7 @@ export default async () => {
       body: productsJSON,
     };
   } catch (error) {
-    console.error(error);
+    return handleError(500);
   } finally {
     client.end();
   }

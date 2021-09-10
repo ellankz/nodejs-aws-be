@@ -19,24 +19,15 @@ export default async (event) => {
       return handleError(400);
     }
 
-    const productResponse = await client.query(
-      `insert into products (title, description, image_url, price) values ('${title}', '${description}', '${image_url}', '${price}') RETURNING *`
+    const response = await client.query(
+      `WITH products as (
+        insert into products (title, description, image_url, price) values
+        ('${title}', '${description}', '${image_url}', '${price}')
+            returning id, title
+        )
+        insert into stocks (product_id, count) values 
+        ((select products.id from products where products.title = '${title}'), '${count}') returning product_id`
     );
-
-    const product = productResponse?.rows?.[0];
-
-    if (!product) {
-      return handleError(500);
-    }
-    const stockResponse = await client.query(
-      `insert into stocks (product_id, count) values ('${product.id}', '${count}') RETURNING *`
-    );
-
-    if (!stockResponse?.rows?.[0]) {
-      return handleError(500);
-    }
-
-    const productJSON = await JSON.stringify({ ...product, count });
 
     return {
       statusCode: 201,
@@ -44,10 +35,12 @@ export default async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
-      body: productJSON,
+      body: JSON.stringify({
+        product_id: response?.rows[0]?.id,
+      }),
     };
   } catch (error) {
-    console.error(error);
+    return handleError(500);
   } finally {
     client.end();
   }

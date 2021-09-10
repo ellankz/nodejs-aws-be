@@ -12,13 +12,8 @@ test('product is created', async () => {
   };
 
   const result = await createProduct(event);
-  const product = JSON.parse(result.body);
   expect(result).toBeDefined();
-  expect(product).toHaveProperty('description');
-  expect(product).toHaveProperty('count');
-  expect(product).toHaveProperty('id');
-  expect(product).toHaveProperty('price');
-  expect(product).toHaveProperty('title');
+  expect(result.statusCode).toBe(201);
 });
 
 test('bad request error is received', async () => {

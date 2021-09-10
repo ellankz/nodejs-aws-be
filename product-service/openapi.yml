@@ -30,6 +30,9 @@ components:
           description:
             type: string
             description: Description of the product
+          image_url:
+            type: string
+            description: Url of the product image
           id:
             description: uuid
             type: string
@@ -56,6 +59,9 @@ components:
         description:
           type: string
           description: Description of the product
+        image_url:
+          type: string
+          description: Url of the product image
         id:
           description: uuid
           type: string
@@ -70,6 +76,45 @@ components:
     GetProductRequest:
       title: Empty Schema
       type: object
+    CreateProductResponse:
+      title: Product
+      description: A product in the catalog
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the product
+        image_url:
+          type: string
+          description: Url of the product image
+        id:
+          description: uuid
+          type: string
+          format: uuid
+        price:
+          description: Product's price
+          type: integer
+          minimum: 0
+        title:
+          description: Product title
+          type: string
+    CreateProductRequest:
+      title: Product
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the product
+        image_url:
+          type: string
+          description: Url of the product image
+        price:
+          description: Product's price
+          type: integer
+          minimum: 0
+        title:
+          description: Product title
+          type: string
   securitySchemes: {}
 info:
   title: Products API
@@ -90,6 +135,29 @@ paths:
                 $ref: '#/components/schemas/GetProductsListResponse'
         '500':
           description: Error getting list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: createProduct
+      summary: Create new product
+      description: Returns the newly created product
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error creating product
           content:
             application/json:
               schema:

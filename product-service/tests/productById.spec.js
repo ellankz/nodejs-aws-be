@@ -2,7 +2,7 @@ const { getProductsById } = require('../handler');
 
 test('product info is received', async () => {
   const event = {
-    pathParameters: { productId: '7567ec4b-b10c-48c5-9345-fc73c48a80a1' },
+    pathParameters: { productId: 'da2f263b-a12e-4588-ac1b-49353559a467' },
   };
 
   const result = await getProductsById(event);
@@ -13,15 +13,11 @@ test('product info is received', async () => {
   expect(product).toHaveProperty('id');
   expect(product).toHaveProperty('price');
   expect(product).toHaveProperty('title');
-
-  const errorEvent = {
-    pathParameters: { productId: '1111xxxxx' },
-  };
 });
 
 test('not found error is received', async () => {
   const event = {
-    pathParameters: { productId: '1111xxxxx' },
+    pathParameters: { productId: '01630ecd-01bf-48a0-9051-8e688872fe6b' },
   };
 
   const result = await getProductsById(event);

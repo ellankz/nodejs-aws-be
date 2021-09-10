@@ -28,6 +28,12 @@ provider:
   region: eu-west-1
   httpApi:
     cors: true
+  environment:
+    PG_HOST: ${PG_HOST}
+    PG_PORT: ${PG_PORT}
+    PG_DATABASE: ${PG_DATABASE}
+    PG_USERNAME: ${PG_USERNAME}
+    PG_PASSWORD: ${PG_PASSWORD}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -104,7 +110,32 @@ functions:
                   application/json: 'GetProductResponse'
               - statusCode: 500
                 responseBody:
-                  description: 'Error getting list of products'
+                  description: 'Error getting product'
+                responseModels:
+                  application/json: 'ErrorResponse'
+  createProduct:
+    handler: handler.createProduct
+    events:
+      - http:
+          path: /products
+          method: post
+          cors: true
+          documentation:
+            summary: 'Create one product'
+            description: 'Creates one new product'
+            requestModels:
+              application/json: 'CreateProductRequest'
+            requestBody:
+              description: 'A user information object'
+            methodResponses:
+              - statusCode: 200
+                responseBody:
+                  description: 'Product info'
+                responseModels:
+                  application/json: 'GetProductResponse'
+              - statusCode: 500
+                responseBody:
+                  description: 'Error creating product'
                 responseModels:
                   application/json: 'ErrorResponse'
 #      - httpApi:

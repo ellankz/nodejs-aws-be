@@ -110,7 +110,32 @@ functions:
                   application/json: 'GetProductResponse'
               - statusCode: 500
                 responseBody:
-                  description: 'Error getting list of products'
+                  description: 'Error getting product'
+                responseModels:
+                  application/json: 'ErrorResponse'
+  createProduct:
+    handler: handler.createProduct
+    events:
+      - http:
+          path: /products
+          method: post
+          cors: true
+          documentation:
+            summary: 'Create one product'
+            description: 'Creates one new product'
+            requestModels:
+              application/json: 'CreateProductRequest'
+            requestBody:
+              description: 'A user information object'
+            methodResponses:
+              - statusCode: 200
+                responseBody:
+                  description: 'Product info'
+                responseModels:
+                  application/json: 'GetProductResponse'
+              - statusCode: 500
+                responseBody:
+                  description: 'Error creating product'
                 responseModels:
                   application/json: 'ErrorResponse'
 #      - httpApi:

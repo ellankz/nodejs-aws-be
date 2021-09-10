@@ -12,8 +12,6 @@ export default async (event) => {
       `select products.id, products.title, products.description, products.image_url, products.price, stocks.count from products left join stocks on stocks.product_id = products.id where products.id = '${productId}'`
     );
 
-    console.log(product);
-
     const product = productResponse?.rows?.[0];
 
     if (!product) {

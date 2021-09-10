@@ -1,6 +1,8 @@
 export const handleError = (status) => {
   const errors = [];
   errors[404] = 'Not found';
+  errors[400] = 'Bad request';
+  errors[500] = 'Internal server error';
 
   return {
     statusCode: status,
